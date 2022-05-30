@@ -17,11 +17,39 @@ amount_of_metal = 0
 class Player():
     pass
 
-class HUD():
-    pass
+
 
 class CITY():
-    pass
+    def water():
+        pass
+    def food():
+        pass
+    def people():
+        pass
+    def rock():
+        pass
+    def metal():
+        pass
+    def strenght():
+        pass
+    def setup(self,screen,font):
+
+        pass
+    def drawrectplus(self,screen,font,positionx,positoiny):
+        global game_state
+        plus = font.render("+", True, cp.Black)
+        while game_state > 2:
+            screen.blit(plus,(positionx,positoiny))
+            pygame.draw.rect(screen,cp.width,[50,50,positionx,positoiny])
+    
+    def drawrectmins(self,screen,font, positionx,positoiny):
+        global game_state
+        minus = font.render("-",True,cp.Black)
+        while game_state > 2:
+            screen.blit(minus,(positionx,positoiny))
+            pygame.draw.rect(screen,cp.white,[50,50,positionx,positoiny])
+
+
 
 class Main():
     def handle_inputs(self,keys,event):
@@ -103,13 +131,14 @@ class Main():
             screen.blit(rocks,(cp.width * .85,cp.height * 0))
             pygame.display.update()
         
-    
+     
     def Roma(self,screen,font,keys):
         global game_state
         self.previous_frame_time = time.time()
         while game_state == 3:
             screen.fill(cp.Purple)
             self.HUD(screen,font)
+            CITY.setup(screen,font)
             pygame.display.update()
 
     def Eygpt(self,screen,font,keys):
