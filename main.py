@@ -86,29 +86,46 @@ class Main():
             pygame.display.update()
 
     def HUD(self,screen,font):
-        global game_state
+        global game_state, clean_water_percentage,number_of_people,strength,amount_of_food,amount_of_metal,amount_of_rocks
+        clean_water = font.render(f"Water: {clean_water_percentage}",True,cp.Black)
+        people = font.render(f"People: {number_of_people}", True, cp.Black)
+        Strength = font.render(f"Strength: {strength}", True, cp.Black)
+        food = font.render(f"Food: {amount_of_food}", True, cp.Black)
+        metal = font.render(f"Metal:{amount_of_metal}",True,cp.Black)
+        rocks = font.render(f"Rocks: {amount_of_metal}",True,cp.Black)
         self.previous_frame_time = time.time()
         while game_state > 2:
+            screen.blit(clean_water,(cp.width * .17,cp.height * 0))
+            screen.blit(people,(cp.width * 0,cp.height * 0))
+            screen.blit(Strength,(cp.width * .34,cp.height * 0))
+            screen.blit(food,(cp.width * .53,cp.height * 0))
+            screen.blit(metal,(cp.width * .68,cp.height * 0))
+            screen.blit(rocks,(cp.width * .85,cp.height * 0))
             pygame.display.update()
-        pass
+        
     
-    def Roma(self,screen,font):
+    def Roma(self,screen,font,keys):
         global game_state
         self.previous_frame_time = time.time()
         while game_state == 3:
             screen.fill(cp.Purple)
+            self.HUD(screen,font)
             pygame.display.update()
 
-    def Eygpt(self,screen,font):
+    def Eygpt(self,screen,font,keys):
         global game_state
         self.previous_frame_time = time.time()
         while game_state == 4:
+            screen.fill(cp.Yellow)
+            self.HUD(screen,font)
             pygame.display.update()
     
-    def China(self,screen,font):
+    def China(self,screen,font,keys):
         global game_state
         self.previous_frame_time = time.time()
         while game_state == 5:
+            screen.fill(cp.Red)
+            self.HUD(screen,font)
             pygame.display.update()
     
 
@@ -146,21 +163,6 @@ class Main():
                 self.handle_inputs(keys,event)
                 if event.type == pygame.QUIT:
                     game_state = 2
-                #if event.type == pygame.KEYDOWN:
-                    #if event.type == K_1:
-                       # keys
-                       # game_state = 3
-                    #if event.type == K_2:
-                        #game_state = 4
-                    #if event.type == K_3:
-                       # game_state = 5
-                #if mouse_x > (cp.width *.17) - (Roma_text.get_width() * .5) and mouse_x < (cp.width * .17) + (Roma_text.get_width() * .5):
-                    #if mouse_y > (cp.height * .33) - (Roma_text.get_height() *.5 ) and mouse_y < (cp.height * .33) + (Roma_text.get_heigth()*.5):
-                       # if event.type == pygame.MOUSEBUTTONDOWN:
-                            #screen.fill(cp.Purple)
-                            #game_state = 3
-            
-                            #print("works")
             if keys[4] == True:
                 game_state = 3
             if keys[5] == True:
@@ -174,6 +176,7 @@ class Main():
         while game_state != 2:
             screen = self.setup_pygame()
             font = pygame.font.Font("Inter.ttf",32)
+            font_small = pygame.font.Font("Inter.ttf",20)
              #        A      D      W      S      1     2      3
             keys = [False, False, False, False, False, False, False]
             
@@ -183,10 +186,10 @@ class Main():
                 self.previous_frame_time = time.time()
                 self.game(screen, font, keys)
             elif game_state == 3 :
-                self.Roma(screen,font)
+                self.Roma(screen,font_small,keys)
             elif game_state == 4:
-                self.Eygpt(screen,font)
+                self.Eygpt(screen,font_small,keys)
             elif game_state == 5:
-                self.China(screen,font)
+                self.China(screen,font_small,keys)
 
 game = Main()
