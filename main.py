@@ -10,45 +10,12 @@ import math
 game_state = 0
 number_of_people = 0
 amount_of_food = 0
-clean_water_percentage = 0
+clean_water_percentage = 100
 strength = 0
 amount_of_rocks = 0
 amount_of_metal = 0 
 class Player():
     pass
-
-
-
-class CITY():
-    def water():
-        pass
-    def food():
-        pass
-    def people():
-        pass
-    def rock():
-        pass
-    def metal():
-        pass
-    def strenght():
-        pass
-    def setup(self,screen,font):
-
-        pass
-    def drawrectplus(self,screen,font,positionx,positoiny):
-        global game_state
-        plus = font.render("+", True, cp.Black)
-        while game_state > 2:
-            screen.blit(plus,(positionx,positoiny))
-            pygame.draw.rect(screen,cp.width,[50,50,positionx,positoiny])
-    
-    def drawrectmins(self,screen,font, positionx,positoiny):
-        global game_state
-        minus = font.render("-",True,cp.Black)
-        while game_state > 2:
-            screen.blit(minus,(positionx,positoiny))
-            pygame.draw.rect(screen,cp.white,[50,50,positionx,positoiny])
-
 
 
 class Main():
@@ -130,15 +97,74 @@ class Main():
             screen.blit(metal,(cp.width * .68,cp.height * 0))
             screen.blit(rocks,(cp.width * .85,cp.height * 0))
             pygame.display.update()
-        
-     
+
+    def drawrectmins(self,screen,font, positionx,positoiny):
+        global game_state
+        value = 0
+        minus = font.render("-",True,cp.Black)
+        while game_state > 2:
+            screen.blit(minus,(positionx,positoiny))
+            mouse = pygame.mouse.get_pos()
+            pygame.draw.rect(screen,cp.White,[50,50,positionx,positoiny])
+            if positionx < mouse[0] < positionx + 50 and positoiny < mouse[1] < positoiny + 50:
+                if pygame.MOUSEBUTTONDOWN():
+                    value = 1 
+            pygame.display.update()    
+        return value
+
+    def drawrectplus(self,screen,font,positionx,positoiny):
+        global game_state
+        value = 0
+        plus = font.render("+", True, cp.Black)
+        while game_state > 2:
+            screen.blit(plus,(positionx,positoiny))
+            mouse = pygame.mouse.get_pos()
+            pygame.draw.rect(screen,cp.White,[50,50,positionx,positoiny])
+            if positionx < mouse[0] < positionx + 50 and positoiny < mouse[1] < positoiny + 50:
+                if pygame.MOUSEBUTTONDOWN():
+                    value = 1
+            pygame.display.update()
+        return value 
+
+    def setup(self,screen,font):
+        global game_state
+        while game_state > 2:
+            self.water(screen,font)
+            pygame.display.update()
+
+    def water(self,screen,font):
+        global clean_water_percentage, number_of_people
+        peoplewater = 0
+        addwatervalue = self.drawrectplus(screen,font,100,100)
+        minuswatervalue = self.drawrectmins(screen,font,200,100)
+        if addwatervalue == 1 and number_of_people == 0:
+            peoplewater += 1
+        if minuswatervalue == 1:
+            peoplewater -= 1
+        peoplewatertext = font.render(str(peoplewater),True,cp.Black)
+        while game_state > 2:
+            screen.blit(peoplewatertext,(170,100))
+            pygame.draw.rect(screen,cp.White,[50,50,150,100])
+            pygame.display.update()
+
+    def food(self,screen,font):
+        pass
+    def people(self,screen,font):
+        pass
+    def rock(self,screen,font):
+        pass
+    def metal(self,screen,font):
+        pass
+    def strenght(self,screen,font):
+        pass
+    
     def Roma(self,screen,font,keys):
         global game_state
         self.previous_frame_time = time.time()
         while game_state == 3:
             screen.fill(cp.Purple)
             self.HUD(screen,font)
-            CITY.setup(screen,font)
+            self.setup(screen,font)
             pygame.display.update()
 
     def Eygpt(self,screen,font,keys):
